@@ -50,27 +50,18 @@ class Family:
             while self.members[i] == copy_members[random_santa_idx]:
                 random_santa_idx = random.randint(0, len(copy_members)-1)
             used_idx.append(random_santa_idx)
-            # print(random_santa_idx)
             self.members[i].secret_santa = copy_members[random_santa_idx]
-            # for c_m in self.members:
-            #     print(c_m)
-            # print('\n\n')
 
     def send_all_sms(self, client=None):
-        messages = []
         for member in self.members:
-            messages.append(self.send_sms(member))
-        print(messages)
-#        status = client.send_sms(messages)
-#        print(status)
+            message = self.send_sms(member)
+            status = client.send_sms(message)
 
     def send_sms(self, member):
         mensaje = 'Hola {},\nLa navidad ha llegado y con ello el familiar invisible.\nSi eres quien digo ser, ' \
                   'tu amigo invisible es {}.\nBesis!'.format(member.name, member.secret_santa.name)
 
         return Message(member.phone, mensaje, 107036)
-        #print(mensaje)
-        #print('\n')
 
 
 if __name__ == '__main__':
