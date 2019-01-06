@@ -41,12 +41,16 @@ class Family:
     def asign_secret_santas(self):
         copy_members = copy.deepcopy(self.members)
         used_idx = []
+
+        def is_not_same_person(i, idx):
+            return self.members[i] == copy_members[idx]
+
         for i in range(len(self.members)):
             random_santa_idx = random.randint(0, len(copy_members)-1)
-            # Check we already not used this idx and Check it is not himself
-            while random_santa_idx in used_idx or self.members[i] == copy_members[random_santa_idx]:
-                random_santa_idx = random.randint(0, len(copy_members)-1)
 
+            # Check we already not used this idx
+            while random_santa_idx in used_idx or is_not_same_person(i, random_santa_idx):
+                random_santa_idx = random.randint(0, len(copy_members)-1)
 
             used_idx.append(random_santa_idx)
             self.members[i].secret_santa = copy_members[random_santa_idx]
