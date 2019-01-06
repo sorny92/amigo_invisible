@@ -43,14 +43,15 @@ class Family:
         used_idx = []
         for i in range(len(self.members)):
             random_santa_idx = random.randint(0, len(copy_members)-1)
-            # Check we already not used this idx
-            while random_santa_idx in used_idx:
+            # Check we already not used this idx and Check it is not himself
+            while random_santa_idx in used_idx or self.members[i] == copy_members[random_santa_idx]:
                 random_santa_idx = random.randint(0, len(copy_members)-1)
-            # Check it is not himself
-            while self.members[i] == copy_members[random_santa_idx]:
-                random_santa_idx = random.randint(0, len(copy_members)-1)
+
+
             used_idx.append(random_santa_idx)
             self.members[i].secret_santa = copy_members[random_santa_idx]
+#            print(used_idx)
+#            print()
 
     def send_all_sms(self, client=None):
         for member in self.members:
@@ -74,4 +75,7 @@ if __name__ == '__main__':
 
     fabian_family = Family(input_family)
     fabian_family.asign_secret_santas()
-    fabian_family.send_all_sms(client)
+    for person in fabian_family.members:
+        print(person.secret_santa.id)
+        #print()
+    #fabian_family.send_all_sms(client)
